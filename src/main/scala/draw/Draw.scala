@@ -1,9 +1,11 @@
 package draw
 
+import java.awt.Graphics2D
+
 /**
  * Created by rakesh.h on 14/09/15.
  */
-trait Draw[C] { self =>
+sealed trait Draw[C] { self =>
   def run(canvas: C): Unit = self match {
     case Drawing(f) => f(canvas)
   }

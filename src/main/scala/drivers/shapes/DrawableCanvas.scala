@@ -1,4 +1,4 @@
-package drivers
+package drivers.shapes
 
 import java.awt.{Graphics, Graphics2D}
 import javax.swing.JPanel

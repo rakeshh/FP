@@ -1,22 +1,14 @@
 package drivers.animation
 
-import animation.Animate
+import animation.{Animate, Animation}
 import region.{Basic, Region}
 import shape.{Circle, Rectangle}
 
 /**
- * Created by rakesh.h on 18/09/15.
- * Moving train, right click and run it.
- */
-object MovingTrain extends AnimatedWindow{
-  override def animate: Animate[Region] = Animate {time =>
-    val coaches = (-1 to 4).map(index => moveCoachTo(getCoach(time), index * 8.5))
-    val train = coaches.reduce[Region](_ ++ _)
-    train
-  }
-
-  //it will move coach back/forward by this distance along x axis
-  def moveCoachTo(coach: Region, distance: Double) = coach --> (distance, 0.0)
+  * Created by rakesh on 22/1/17.
+  */
+object MovingCoach extends AnimatedWindow{
+  def animate: Animation[Region] = Animate { time => getCoach(time)}
 
   def getCoach(time: Double): Region = {
     val backTyre = getTyre(time)

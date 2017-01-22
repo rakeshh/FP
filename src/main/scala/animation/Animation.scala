@@ -6,9 +6,12 @@ import animation.Animation._
 /**
  * Created by rakesh.h on 18/09/15.
  */
-trait Animation[A] {self =>
+sealed trait Animation[A] {self =>
 
-  def map[B](f : A => B): Animation[B] = flatMap(a => unit(f(a)))
+  def map[B](f : A => B): Animation[B] = self match {
+    case Animate(g) => Animate(time => f(g(time)))
+  }
+    //flatMap(a => unit(f(a)))
 
   /**
    * it passes the time as it is from first animation to second one.
@@ -37,6 +40,10 @@ object Animation {
   def timeAnimation: Animation[Time] = Animate(identity)
 
   def unit[A](a: => A): Animation[A] = Animate(_ => a)
+
+  def map[A,B](aa: Animation[A])(f: A => B): Animation[B] = aa match {
+    case Animate(g) => Animate(time => f(g(time)))
+  }
 
   def lift0[A](a: => A): Animation[A] = unit(a)
 

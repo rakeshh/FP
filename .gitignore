@@ -10,3 +10,6 @@
 ## File-based project format:
 *.ipr
 *.iws
+project/project/
+project/target/
+target/

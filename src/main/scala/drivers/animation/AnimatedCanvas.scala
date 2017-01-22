@@ -19,12 +19,17 @@ class AnimatedCanvas(animate: Animation[Region])  extends JPanel with ActionList
   override def actionPerformed(e: ActionEvent): Unit = repaint()
 
   override def paintComponent(g: Graphics): Unit = {
+   g.clearRect(0, 0, getWidth, getHeight) //clear earlier drawn shapes
+    val time = getTime
+    val region = animate.run(time) //ask animation for the current position of shape
+
     implicit  val size  = (getWidth, getHeight)
     val g2D = g.asInstanceOf[Graphics2D]
-    val currentTime = System.currentTimeMillis
-    val time = (currentTime - startTime).toDouble/1000
+    region.draw.run(g2D) //draw the shape
+  }
 
-    val region = animate.run(time)
-    region.draw.run(g2D)
+  def getTime = {
+    val currentTime = System.currentTimeMillis
+    (currentTime - startTime).toDouble/1000 //time  in seconds
   }
 }

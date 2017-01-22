@@ -1,4 +1,4 @@
-package drivers
+package drivers.shapes
 
 import region.{Basic, Region}
 import shape.Rectangle
@@ -9,9 +9,8 @@ import shape.Rectangle
  */
 object Spokes extends AbstractWindow{
   override def getShape: Region = {
-    val initialSpoke = Basic(Rectangle(2.0, .1))
-    val rotated = Region.rotate(initialSpoke, 30)
-
-    rotated + initialSpoke
+    val spoke = Basic(Rectangle(2.0, .1))
+    val rotatedSpokes = (0 to 6).map(i => Region.rotate(spoke, i * 30))
+    rotatedSpokes.reduce(_ ++ _)
   }
 }
